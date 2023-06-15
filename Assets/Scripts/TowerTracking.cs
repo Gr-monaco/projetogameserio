@@ -42,6 +42,10 @@ public class TowerTracking : MonoBehaviour
     {
       targetPosition = Input.mousePosition;
     }
+    else
+    {
+      targetPosition = target.transform.position;
+    }
     Vector3 dir = targetPosition - Camera.main.WorldToScreenPoint(transform.position);
 
     //representa a rotação desejada para que o objeto atual olhe na direção do objeto alvo
