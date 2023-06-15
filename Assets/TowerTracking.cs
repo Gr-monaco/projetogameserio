@@ -25,15 +25,40 @@ public class TowerTracking : MonoBehaviour
   /// </summary>
   private Vector3 targetPosition;
 
+  /// <summary>
+  /// Variavel que define a velocidade de rotação da torre.
+  /// </summary>
+  public float rotationSpeed = 5f;
+
+  ///<summary>
+  /// O valor do angulo de estabilidade. É o limite em graus no qual a diferença da posição atual
+  /// da torre com o alvo a qual se considera "estabilizado".
+  ///</summary>
+  public float limiteEstabilidade = 1f;
+
   void Update()
   {
-    //Baseado neste vídeo : https://www.youtube.com/watch?v=Geb_PnF1wOk
     if (target == null)
     {
       targetPosition = Input.mousePosition;
     }
     Vector3 dir = targetPosition - Camera.main.WorldToScreenPoint(transform.position);
-    var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - angleOffSet;
-    transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+    //representa a rotação desejada para que o objeto atual olhe na direção do objeto alvo
+    Vector3 targetDirection = new Vector3(dir.x, dir.y, 0f);
+
+    Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, targetDirection);
+
+    //armazena a diferença angular em graus entre a rotação atual do objeto e a rotação desejada
+    float diferencaAnglo = Quaternion.Angle(transform.rotation, targetRotation);
+
+    if (diferencaAnglo > limiteEstabilidade)
+    {
+      transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+    }
+    else
+    {
+      transform.rotation = targetRotation;
+    }
   }
 }
