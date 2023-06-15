@@ -34,7 +34,7 @@ public class TowerTracking : MonoBehaviour
   /// O valor do angulo de estabilidade. É o limite em graus no qual a diferença da posição atual
   /// da torre com o alvo a qual se considera "estabilizado".
   ///</summary>
-  public float limiteEstabilidade = 1f;
+  public float stabilityLimit = 1f;
 
   void Update()
   {
@@ -52,7 +52,7 @@ public class TowerTracking : MonoBehaviour
     //armazena a diferença angular em graus entre a rotação atual do objeto e a rotação desejada
     float diferencaAnglo = Quaternion.Angle(transform.rotation, targetRotation);
 
-    if (diferencaAnglo > limiteEstabilidade)
+    if (diferencaAnglo > stabilityLimit)
     {
       transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
     }
