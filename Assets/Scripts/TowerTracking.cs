@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
 /// Classe que dá o comportamento ao objeto de ficar seguindo outro objeto.
-/// Caso não seja definido <see cref="target"/>, o mouse será o target.
 /// </summary>
 public class TowerTracking : MonoBehaviour
 {
@@ -26,7 +26,7 @@ public class TowerTracking : MonoBehaviour
   private Vector3 targetPosition;
 
   /// <summary>
-  /// Variavel que define a velocidade de rotação da torre.
+  /// Variável que define a velocidade de rotação da torre.
   /// </summary>
   public float rotationSpeed = 5f;
 
@@ -36,17 +36,21 @@ public class TowerTracking : MonoBehaviour
   ///</summary>
   public float stabilityLimit = 1f;
 
+  ///<summary>
+  /// Lista de Objetos que estão dentro do raio de alcance da torre.
+  ///</summary>
+  public List<GameObject> insideRangeObjects;
+
   void Update()
   {
     if (target == null)
     {
-      targetPosition = Input.mousePosition;
+      return;
     }
-    else
-    {
-      targetPosition = target.transform.position;
-    }
-    Vector3 dir = targetPosition - Camera.main.WorldToScreenPoint(transform.position);
+
+    Debug.Log(target.name);
+    targetPosition = target.transform.position;
+    Vector3 dir = targetPosition - transform.position;
 
     //representa a rotação desejada para que o objeto atual olhe na direção do objeto alvo
     Vector3 targetDirection = new Vector3(dir.x, dir.y, 0f);
@@ -64,5 +68,36 @@ public class TowerTracking : MonoBehaviour
     {
       transform.rotation = targetRotation;
     }
+  }
+
+  ///<summary>
+  ///Determina qual é o objeto mais a esquerda da tela para definir como alvo
+  ///Ainda tem que ser melhorada para permitir mais comportamentos e posição diferenet.
+  ///</summary>
+  private GameObject findMostLeftTarget()
+  {
+    if (insideRangeObjects.Count == 0)
+    {
+      target = null;
+      return null;
+    }
+    GameObject mostLeftTarget = insideRangeObjects.Aggregate((minObj, obj) =>
+      obj.transform.position.x < minObj.transform.position.x ? obj : minObj
+    );
+
+    target = mostLeftTarget;
+    return mostLeftTarget;
+  }
+
+  private void OnTriggerEnter2D(Collider2D other)
+  {
+    insideRangeObjects.Add(other.gameObject);
+    findMostLeftTarget();
+  }
+
+  private void OnTriggerExit2D(Collider2D other)
+  {
+    insideRangeObjects.Remove(other.gameObject);
+    findMostLeftTarget();
   }
 }
