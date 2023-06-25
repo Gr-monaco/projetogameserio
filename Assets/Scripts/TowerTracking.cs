@@ -52,9 +52,15 @@ public class TowerTracking : MonoBehaviour
   ///</summary>
   public float towerRangeRadius = 5;
 
+  private SpriteRenderer spriteRenderer;
+
   void Start()
   {
     updateTowerRadius();
+    if (GetComponent<SpriteRenderer>() != null)
+    {
+      spriteRenderer = GetComponent<SpriteRenderer>();
+    }
   }
 
   void Update()
@@ -88,6 +94,8 @@ public class TowerTracking : MonoBehaviour
     {
       transform.rotation = targetRotation;
     }
+
+    updateSpriteOrientation();
   }
 
   ///<summary>
@@ -127,5 +135,22 @@ public class TowerTracking : MonoBehaviour
   public void updateTowerRadius()
   {
     this.GetComponent<CircleCollider2D>().radius = towerRangeRadius;
+  }
+
+  ///<summary>
+  ///Atualiza a orientação do sprite dependendo do angulo.
+  ///Caso esteja entre 0 a 180 graus de rotação no eixo z, fica para esquerda,
+  ///caso contrário ficará para direita.
+  ///</summary>
+  public void updateSpriteOrientation()
+  {
+    if (transform.rotation.eulerAngles.z > 0 && transform.eulerAngles.z < 180)
+    {
+      spriteRenderer.flipX = true;
+    }
+    else
+    {
+      spriteRenderer.flipX = false;
+    }
   }
 }
