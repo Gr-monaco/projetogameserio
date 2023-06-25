@@ -458,7 +458,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1616598576}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.176, y: 0.277, z: 0}
+  m_LocalPosition: {x: 2.85, y: 1.87, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -602,7 +602,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 150a812ba1fc3534fa6c5d742a27e5b8, type: 3}
+  m_Sprite: {fileID: -9095717837082945937, guid: e904cbe63f6cd5c42ba0dde092984a3f, type: 3}
   m_Color: {r: 1, g: 0.15016611, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -627,9 +627,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   angleOffSet: 90
+  restAngle: {x: 0, y: 0, z: -90}
   rotationSpeed: 1
   stabilityLimit: 1
   insideRangeObjects: []
+  towerRangeRadius: 5
 --- !u!58 &1847709034
 CircleCollider2D:
   m_ObjectHideFlags: 0

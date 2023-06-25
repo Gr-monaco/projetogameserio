@@ -20,6 +20,12 @@ public class TowerTracking : MonoBehaviour
   public int angleOffSet = 90;
 
   /// <summary>
+  /// Angulo de descanso da torre. Angulo no qual a torre vai tomar voltar caso 
+  /// não tenha um alvo
+  /// </summary>
+  public Vector3 restAngle = new Vector3(0, 0, -90);
+
+  /// <summary>
   /// Variável interna para armazenar aonde é a posição do alvo.
   /// Necessário pois caso <see cref="target"/> seja nulo, a posição definida será o mouse.
   /// </summary>
@@ -39,25 +45,39 @@ public class TowerTracking : MonoBehaviour
   ///<summary>
   /// Lista de Objetos que estão dentro do raio de alcance da torre.
   ///</summary>
-  public List<GameObject> insideRangeObjects;
+  public List<GameObject> insideRangeObjects = new List<GameObject>() { };
+
+  ///<summary>
+  /// Raio de alcance da torre.
+  ///</summary>
+  public float towerRangeRadius = 5;
+
+  void Start()
+  {
+    updateTowerRadius();
+  }
 
   void Update()
   {
+    Quaternion targetRotation;
+
     if (target == null)
     {
-      return;
+      targetRotation = Quaternion.Euler(restAngle);
+    }
+    else
+    {
+      targetPosition = target.transform.position;
+      Vector3 dir = targetPosition - transform.position;
+
+      //representa a rotação desejada para que o objeto atual olhe na direção do objeto alvo
+      Vector3 targetDirection = new Vector3(dir.x, dir.y, 0f);
+
+      targetRotation = Quaternion.LookRotation(Vector3.forward, targetDirection);
+
+      //armazena a diferença angular em graus entre a rotação atual do objeto e a rotação desejada
     }
 
-    Debug.Log(target.name);
-    targetPosition = target.transform.position;
-    Vector3 dir = targetPosition - transform.position;
-
-    //representa a rotação desejada para que o objeto atual olhe na direção do objeto alvo
-    Vector3 targetDirection = new Vector3(dir.x, dir.y, 0f);
-
-    Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, targetDirection);
-
-    //armazena a diferença angular em graus entre a rotação atual do objeto e a rotação desejada
     float diferencaAnglo = Quaternion.Angle(transform.rotation, targetRotation);
 
     if (diferencaAnglo > stabilityLimit)
@@ -99,5 +119,13 @@ public class TowerTracking : MonoBehaviour
   {
     insideRangeObjects.Remove(other.gameObject);
     findMostLeftTarget();
+  }
+
+  ///<summary>
+  ///Atualiza o alcance da torre. A função aumenta o tamanho do CircleCollider.
+  ///</summary>
+  public void updateTowerRadius()
+  {
+    this.GetComponent<CircleCollider2D>().radius = towerRangeRadius;
   }
 }
