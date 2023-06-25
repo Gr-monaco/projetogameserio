@@ -65,6 +65,12 @@ public class TowerTracking : MonoBehaviour
 
   void Update()
   {
+    updateOrientation();
+    updateSpriteOrientation();
+  }
+
+  private void updateOrientation()
+  {
     Quaternion targetRotation;
 
     if (target == null)
@@ -94,8 +100,6 @@ public class TowerTracking : MonoBehaviour
     {
       transform.rotation = targetRotation;
     }
-
-    updateSpriteOrientation();
   }
 
   ///<summary>
