@@ -674,8 +674,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1466364750}
   - component: {fileID: 1466364751}
-  - component: {fileID: 1466364753}
   - component: {fileID: 1466364752}
+  - component: {fileID: 1466364753}
   m_Layer: 0
   m_Name: EnemySprite
   m_TagString: Untagged
@@ -783,6 +783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc822625bf293d43adcf414ad4b7518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 1855966032}
 --- !u!1 &1855966028
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,6 +795,7 @@ GameObject:
   - component: {fileID: 1855966029}
   - component: {fileID: 1855966031}
   - component: {fileID: 1855966030}
+  - component: {fileID: 1855966032}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -862,6 +864,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!225 &1855966032
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855966028}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2021626559
 GameObject:
   m_ObjectHideFlags: 0

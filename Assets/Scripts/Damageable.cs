@@ -6,8 +6,15 @@ using UnityEngine.Events;
 public class Damageable : MonoBehaviour
 {
 
-  public int maxHealth = 20;
+  ///<summary>
+  ///Vida máxima da entidade.
+  ///</summary>
+  [SerializeField]
+  private int maxHealth = 20;
 
+  ///<summary>
+  ///Vida atual da entidade
+  ///</summary>
   [SerializeField]
   private int health;
 
@@ -27,7 +34,6 @@ public class Damageable : MonoBehaviour
   public UnityEvent OnHit;
   public UnityEvent OnHeal;
 
-  // Start is called before the first frame update
   void Start()
   {
     if (health == 0)
@@ -49,16 +55,14 @@ public class Damageable : MonoBehaviour
     }
   }
 
+  /// <summary>
+  /// Restaura a vida da entidade em uma determinada quantidade.
+  /// </summary>
+  /// <param name="healthRestored">A quantidade de vida a ser restaurada.</param>
   public void Heal(int healthRestored)
   {
     Health += healthRestored;
     Health = Mathf.Clamp(Health, 0, maxHealth);
     OnHeal?.Invoke();
-  }
-
-  // Update is called once per frame
-  void Update()
-  {
-
   }
 }

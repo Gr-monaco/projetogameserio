@@ -6,21 +6,18 @@ using UnityEngine.UIElements;
 public class Fadable : MonoBehaviour
 {
 
+  ///<summary>
+  ///CanvasGroup do elemento de UI que sofrerá fade in ou fade out
+  ///em caso do mouse sair e entrar do objeto.
+  ///</summary>
   [SerializeField] private CanvasGroup canvasGroup;
 
-  // Start is called before the first frame update
   void Start()
   {
     if (canvasGroup != null)
     {
       canvasGroup.alpha = 0;
     }
-  }
-
-  // Update is called once per frame
-  void Update()
-  {
-
   }
 
   private void OnMouseEnter()
